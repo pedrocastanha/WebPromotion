@@ -121,6 +121,16 @@ export function AppSidebar() {
             {!collapsed && <span className="ml-2">Sair</span>}
           </Button>
         </div>
+        <div className="mt-auto p-4">
+        <div className="p-2 rounded-lg mb-2">
+          <p className="text-sm font-semibold text-foreground">{user?.name}</p>
+          <p className="text-xs text-muted-foreground">{user?.email}</p>
+        </div>
+        <Button variant="ghost" className="w-full justify-start" onClick={logout}>
+          <LogOut className="mr-2 h-4 w-4" />
+          Sair
+        </Button>
+      </div>
       </SidebarContent>
     </Sidebar>
   );
