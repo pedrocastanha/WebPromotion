@@ -1,24 +1,19 @@
-import { useEffect, useState } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useEffect, useState, ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
+import { useAuth } from "@/contexts/AuthContext"; 
 
-const DashboardLayout = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+interface DashboardLayoutProps {
+  children?: ReactNode; 
+}
+
+const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+  const { isAuthenticated, isLoading } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const auth = localStorage.getItem("isAuthenticated");
-    
-    if (!auth) {
-      navigate("/login");
-    } else {
-      setIsAuthenticated(true);
-    }
-  }, [navigate]);
-
-  if (!isAuthenticated) {
-    return null;
+  if (isLoading) {
+    return <div>Carregando layout...</div>; 
   }
 
   return (
@@ -34,7 +29,7 @@ const DashboardLayout = () => {
           
           {/* Main content */}
           <main className="flex-1 p-6 overflow-auto">
-            <Outlet />
+            {children}
           </main>
         </div>
       </div>

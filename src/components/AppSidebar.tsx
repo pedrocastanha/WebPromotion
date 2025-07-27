@@ -21,7 +21,7 @@ import {
   LogOut 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const menuItems = [
   { 
@@ -49,21 +49,12 @@ const menuItems = [
 export function AppSidebar() {
   const { state } = useSidebar();
   const location = useLocation();
-  const navigate = useNavigate();
+  const { logout, user } = useAuth(); 
   const currentPath = location.pathname;
-  const userEmail = localStorage.getItem("userEmail") || "";
   const collapsed = state === "collapsed";
 
-  const isActive = (path: string) => currentPath === path;
   const getNavCls = ({ isActive }: { isActive: boolean }) =>
     isActive ? "bg-primary/10 text-primary border-r-2 border-primary" : "hover:bg-muted/50";
-
-  const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("userName");
-    navigate("/login");
-  };
 
   return (
     <Sidebar
@@ -80,7 +71,7 @@ export function AppSidebar() {
             {!collapsed && (
               <div className="min-w-0">
                 <h2 className="font-bold text-lg truncate">CampanhasPro</h2>
-                <p className="text-xs text-muted-foreground truncate">{userEmail}</p>
+                <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
               </div>
             )}
           </div>
@@ -110,27 +101,16 @@ export function AppSidebar() {
         </SidebarGroup>
 
         {/* Logout Button */}
-        <div className="p-4 border-t border-border">
-          <Button
-            onClick={handleLogout}
-            variant="ghost"
-            size={collapsed ? "icon" : "default"}
-            className="w-full justify-start"
-          >
-            <LogOut className="h-4 w-4 shrink-0" />
-            {!collapsed && <span className="ml-2">Sair</span>}
+        <div className="mt-auto p-4">
+          <div className="p-2 rounded-lg mb-2">
+            <p className="text-sm font-semibold text-foreground">{user?.name}</p>
+            <p className="text-xs text-muted-foreground">{user?.email}</p>
+          </div>
+          <Button variant="ghost" className="w-full justify-start" onClick={logout}>
+            <LogOut className="mr-2 h-4 w-4" />
+            Sair
           </Button>
         </div>
-        <div className="mt-auto p-4">
-        <div className="p-2 rounded-lg mb-2">
-          <p className="text-sm font-semibold text-foreground">{user?.name}</p>
-          <p className="text-xs text-muted-foreground">{user?.email}</p>
-        </div>
-        <Button variant="ghost" className="w-full justify-start" onClick={logout}>
-          <LogOut className="mr-2 h-4 w-4" />
-          Sair
-        </Button>
-      </div>
       </SidebarContent>
     </Sidebar>
   );
