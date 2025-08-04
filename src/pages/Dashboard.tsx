@@ -30,7 +30,6 @@ const Dashboard = () => {
   
   const { toast } = useToast();
 
-  // Carregar configurações do localStorage
   const getOpenaiKey = () => localStorage.getItem("openaiKey") || "";
   const getWebhookUrl = () => localStorage.getItem("webhookUrl") || "";
 

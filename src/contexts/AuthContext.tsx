@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 
 interface User {
+  id: number;
   name: string;
   email: string;
 }
 
 interface AuthResponse {
+  id: number;
   token: string;
   name: string;
   email: string;
@@ -42,7 +44,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const handleAuthSuccess = (data: AuthResponse) => {
-    const userData = { name: data.name, email: data.email };
+    const userData = { id:data.id, name: data.name, email: data.email };
     localStorage.setItem('authToken', data.token);
     localStorage.setItem('user', JSON.stringify(userData));
     setToken(data.token);

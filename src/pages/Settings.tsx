@@ -20,7 +20,6 @@ const Settings = () => {
   const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
 
-  // Carregar configurações salvas do localStorage
   useState(() => {
     const savedOpenaiKey = localStorage.getItem("openaiKey");
     const savedWebhookUrl = localStorage.getItem("webhookUrl");
@@ -33,7 +32,6 @@ const Settings = () => {
     setIsSaving(true);
 
     try {
-      // Salvar no localStorage
       if (openaiKey.trim()) {
         localStorage.setItem("openaiKey", openaiKey);
       }
