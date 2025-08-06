@@ -1,21 +1,13 @@
-import { useEffect, useState } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 
-const DashboardLayout = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const navigate = useNavigate();
+interface DashboardLayoutProps {
+  children: React.ReactNode;
+}
 
-  useEffect(() => {
-    const auth = localStorage.getItem("isAuthenticated");
-    
-    if (!auth) {
-      navigate("/login");
-    } else {
-      setIsAuthenticated(true);
-    }
-  }, [navigate]);
+const DashboardLayout = ({ children }: DashboardLayoutProps) => {
+  const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
     return null;
@@ -34,7 +26,7 @@ const DashboardLayout = () => {
           
           {/* Main content */}
           <main className="flex-1 p-6 overflow-auto">
-            <Outlet />
+            {children}
           </main>
         </div>
       </div>
