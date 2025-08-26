@@ -1,23 +1,23 @@
-// import { Navigate, Outlet } from 'react-router-dom';
-// import { useAuth } from '../contexts/AuthContext';
-// import DashboardLayout from '../components/DashboardLayout';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import DashboardLayout from '../components/DashboardLayout';
 
-// const ProtectedRoute = () => {
-//   const { isAuthenticated, isLoading } = useAuth();
+const ProtectedRoute = () => {
+  const { isAuthenticated, isLoading } = useAuth();
 
-//   if (isLoading) {
-//     return <div>Carregando...</div>;
-//   }
+  if (isLoading) {
+    return <div>Carregando...</div>;
+  }
 
-//   if (!isAuthenticated) {
-//     return <Navigate to="/login" replace />;
-//   }
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
-//   return (
-//     <DashboardLayout>
-//       <Outlet />
-//     </DashboardLayout>
-//   );
-// };
+  return (
+    <DashboardLayout>
+      <Outlet />
+    </DashboardLayout>
+  );
+};
 
-// export default ProtectedRoute;
+export default ProtectedRoute;
